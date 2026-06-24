@@ -1,0 +1,23 @@
+[
+  {
+    "id": "ALT-001",
+    "type": "warning",
+    "message": "Battery at 75% - Medium power consumption detected",
+    "timestamp": "2026-01-15T14:38:00Z",
+    "subsystem": "POWER"
+  },
+  {
+    "id": "ALT-002",
+    "type": "warning",
+    "message": "Temperature elevated at 42°C – monitor chassis heat",
+    "timestamp": "2026-01-15T14:39:15Z",
+    "subsystem": "THERMAL"
+  },
+  {
+    "id": "ALT-003",
+    "type": "critical",
+    "message": "Obstacle detected at coordinates 130, 235 – rerouting",
+    "timestamp": "2026-01-15T14:40:05Z",
+    "subsystem": "NAVIGATION"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "rover_id": "PERSEVERANCE-2026",
+  "mission": "Expedition 2026",
+  "x": 125.0,
+  "y": 240.0,
+  "battery": 75.0,
+  "temperature": 42.0,
+  "is_moving": false,
+  "heading": 245,
+  "speed": 0.12,
+  "signal_strength": 87,
+  "solar_output": 62,
+  "memory_used": 43,
+  "last_updated": "2026-01-15T14:40:22Z"
+}
