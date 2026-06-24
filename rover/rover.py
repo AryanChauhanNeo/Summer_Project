@@ -5,8 +5,8 @@ class Rover:
         self.position = list(start_pos)   # [row, col] → maps to current_position in JSON
         self.goal     = list(goal_pos)    # [row, col] → maps to destination in JSON
         self.state    = "IDLE"            # starts idle, changes once movement begins
-        self.speed    = 0.0              # km/h — 0 when idle or stuck
-        self._path    = None             # reserved for TM2's A* path (Week 3)
+        self.speed    = 0.0               # km/h — 0 when idle or stuck
+        self._path    = None              # reserved for TM2's A* path (Week 3)
 
     # ------------------------------------------------------------------
     # PRIMARY METHOD: called once per simulation tick from main.py
@@ -17,7 +17,6 @@ class Rover:
         Uses greedy movement now — TM2 will replace this with A* in Week 3
         by setting self._path before this method is called.
         """
-
         # Don't move if simulation is already over
         if self.state in ("ARRIVED", "DEAD_BATTERY"):
             self.speed = 0.0
@@ -25,18 +24,17 @@ class Rover:
 
         # --- If TM2 has provided an A* path, follow it ---
         if self._path and len(self._path) > 0:
-            next_cell = self._path.pop(0)          # take next step from path
+            next_cell     = self._path.pop(0)
             self.position = list(next_cell)
             self.state    = "MOVING"
             self.speed    = self._calculate_speed()
             self._check_arrival()
             return
 
-        # --- Default: greedy movement (your Week 1-2 logic) ---
+        # --- Default: greedy movement ---
         next_cell = self._greedy_next_cell(terrain)
 
         if next_cell is None:
-            # Completely stuck this tick — no valid move in either axis
             self.speed = 0.0
             return
 
@@ -55,7 +53,7 @@ class Rover:
         """
         next_cell = self._greedy_next_cell(terrain, peek_only=True)
         if next_cell is None:
-            return False  # at goal or stuck — not meaningful to flag
+            return False
         return terrain.is_obstacle(next_cell[0], next_cell[1])
 
     # ------------------------------------------------------------------
@@ -76,7 +74,6 @@ class Rover:
         Tries to move one step closer to goal.
         Tries row axis first, then column axis as fallback.
         Returns next (row, col) or None if stuck/arrived.
-        peek_only=True means just return the cell without any state change.
         """
         r,  c  = self.position
         gr, gc = self.goal
@@ -97,7 +94,7 @@ class Rover:
         if   c < gc: fallback = (r, c + 1)
         elif c > gc: fallback = (r, c - 1)
         else:
-            return None  # no fallback available
+            return None
 
         if not terrain.is_obstacle(fallback[0], fallback[1]):
             return fallback
@@ -107,12 +104,10 @@ class Rover:
     def _calculate_speed(self):
         """
         Produces a realistic speed value that varies slightly each step.
-        Real rovers don't move at perfectly constant speed — terrain affects it.
         Range: 1.5 to 2.5 km/h
         """
         r, c = self.position
-        # Uses position hash so the same cell always gives same speed (deterministic)
-        variation = (hash((r, c)) % 11) * 0.1   # 0.0 to 1.0
+        variation = (hash((r, c)) % 11) * 0.1
         return round(1.5 + variation, 1)
 
     def _check_arrival(self):
@@ -130,22 +125,18 @@ class Rover:
 # QUICK TEST — run this file directly to verify
 # ------------------------------------------------------------------
 if __name__ == "__main__":
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import sys, os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
     from terrain.terrain_generator import MarsTerrainGenerator
 
-    # Build terrain
     terrain = MarsTerrainGenerator(rows=10, cols=10, obstacle_density=0.10)
     _, start, goal = terrain.generate()
     terrain.print_grid()
 
-    # Create rover
     rover = Rover(start, goal)
     print(f"Starting: {rover}\n")
 
-    # Run up to 30 ticks
     for step in range(1, 31):
         rover.move_towards_goal(terrain)
         obs = rover.is_obstacle_ahead(terrain)
@@ -155,26 +146,3 @@ if __name__ == "__main__":
 
         if rover.state in ("ARRIVED", "DEAD_BATTERY"):
             break
-
-if __name__ == "__main__":
-    import sys, os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-    from terrain.terrain_generator import MarsTerrainGenerator, OBSTACLE
-
-    terrain = MarsTerrainGenerator(rows=10, cols=10, obstacle_density=0.0)  # no random obstacles
-    _, start, goal = terrain.generate()
-
-    # Manually block the cell directly below start
-    block_r = start[0] + 1
-    block_c = start[1]
-    if 0 <= block_r < 10:
-        terrain.grid[block_r][block_c] = OBSTACLE  # force an obstacle ahead
-
-    terrain.print_grid()
-
-    rover = Rover(start, goal)
-    for step in range(1, 6):
-        obs = rover.is_obstacle_ahead(terrain)
-        rover.move_towards_goal(terrain)
-        print(f"Tick {step:02d} | pos={rover.position} | state={rover.state} | obstacle_ahead={obs}")
