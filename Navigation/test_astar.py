@@ -1,6 +1,6 @@
 import numpy as np
 
-from astar import astar
+from navigation_engine import NavigationEngine
 
 
 def visualize_grid(terrain, path, start, destination):
@@ -46,7 +46,7 @@ def visualize_grid(terrain, path, start, destination):
 # ==========================
 
 terrain = np.array([
-    [0, 0, 0, 0, 0],
+    [2, 0, 0, 0, 0],
     [0, 1, 1, 1, 0],
     [0, 0, 0, 1, 0],
     [1, 1, 0, 0, 0],
@@ -61,7 +61,9 @@ destination = (4, 4)
 # RUN A*
 # ==========================
 
-path = astar(
+engine = NavigationEngine()
+
+path = engine.generate_path(
     terrain,
     start,
     destination

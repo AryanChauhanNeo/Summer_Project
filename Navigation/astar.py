@@ -1,6 +1,10 @@
 import heapq
 import numpy as np
 
+EMPTY = 0
+OBSTACLE = 1
+START = 2
+GOAL = 3
 
 def heuristic(a, b):
     """
@@ -37,7 +41,7 @@ def get_neighbors(position, terrain):
         if (
             0 <= nr < rows
             and 0 <= nc < cols
-            and terrain[nr][nc] == 0
+            and terrain[nr][nc] !=1
         ):
             neighbors.append((nr, nc))
 
