@@ -79,3 +79,26 @@ visualize_grid(
     start,
     destination
 )
+
+engine = NavigationEngine()
+
+path = engine.generate_path(
+    terrain,
+    start,
+    destination
+    
+)
+payload = engine.build_payload(terrain)
+
+print("\nPayload:")
+print(payload)
+
+engine.send_navigation(terrain)
+
+obstacles = engine.get_obstacles(terrain)
+
+print("Obstacles:")
+print(obstacles)
+
+print("\nHeading:")
+print(engine.get_heading())
