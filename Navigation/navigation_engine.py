@@ -99,13 +99,13 @@ class NavigationEngine:
 
         return payload
     
-    
+
     def send_navigation(self, terrain):
 
         payload = self.build_payload(terrain)
 
         response = requests.post(
-            "http://127.0.0.1:8000/navigation",
+            "http://127.0.0.1:8001/navigation",
             json=payload
         )
 
