@@ -1,0 +1,276 @@
+/* =============================================================
+   Mars Rover Mission Control – Global Styles
+   Palette derived from the original v0 globals.css:
+     background  hsl(8, 0%, 10%)    ≈ #1a1a1a
+     card        hsl(220,15%,15%)   ≈ #1e2130
+     primary     hsl(200,100%,50%)  ≈ #00bfff  (cyan)
+     secondary   hsl(280, 80%,45%)  ≈ #7c22e0  (violet)
+     accent      hsl(40, 100%,50%)  ≈ #ffaa00  (amber)
+     muted-fg    hsl(0,0%,60%)      ≈ #999
+     border      hsl(220,15%,20%)   ≈ #282e40
+   ============================================================= */
+
+/* ── Reset & root ─────────────────────────────────────────── */
+html, body, [data-testid="stAppViewContainer"] {
+    background-color: #1a1a1a !important;
+    color: #f2f2f2 !important;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Hide Streamlit chrome */
+#MainMenu { visibility: hidden; }
+footer    { visibility: hidden; }
+header    { visibility: hidden; }
+
+[data-testid="stAppViewContainer"] > .main > .block-container {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    max-width: 1400px;
+}
+
+/* Animated grid background */
+[data-testid="stAppViewContainer"]::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(0,191,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,191,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+h1, h2, h3 {
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+/* ── Header section ───────────────────────────────────────── */
+.mission-header {
+    border-bottom: 1px solid #282e40;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.mission-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #ffaa00;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+.mission-subtitle {
+    font-size: 0.72rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 0.3rem;
+}
+
+.mission-status-label {
+    font-size: 0.72rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: right;
+}
+
+.mission-status-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #00bfff;
+    text-align: right;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.6; }
+}
+
+/* ── Telemetry cards ──────────────────────────────────────── */
+.tel-card {
+    background: #1e2130;
+    border: 1px solid #282e40;
+    border-radius: 0.5rem;
+    padding: 1rem 1.1rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+.tel-card:hover {
+    border-color: rgba(0,191,255,0.4);
+}
+.tel-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #00bfff, #7c22e0);
+    border-radius: 3px 0 0 3px;
+}
+
+.tel-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #999;
+    margin-bottom: 0.3rem;
+}
+
+.tel-value {
+    font-size: 1.55rem;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    line-height: 1.1;
+}
+
+.tel-unit {
+    font-size: 0.68rem;
+    color: #999;
+    margin-top: 0.15rem;
+}
+
+/* Battery progress bar */
+.battery-track {
+    width: 100%;
+    height: 5px;
+    background: #282e40;
+    border-radius: 99px;
+    margin-top: 0.55rem;
+    overflow: hidden;
+}
+.battery-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+}
+
+/* System status dots */
+.status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+.dot-active {
+    background: #4ade80;
+    box-shadow: 0 0 6px #4ade80;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+.dot-idle { background: #282e40; }
+
+/* ── Panel wrapper ────────────────────────────────────────── */
+.panel {
+    background: #1e2130;
+    border: 1px solid #282e40;
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.4rem;
+    height: 100%;
+}
+
+.panel-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #00bfff;
+    margin-bottom: 0.9rem;
+}
+
+/* ── Alert cards ──────────────────────────────────────────── */
+.alert-card {
+    border-radius: 0.4rem;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.55rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+.alert-warning {
+    background: rgba(250,204,21,0.07);
+    border-left: 4px solid #facc15;
+    border: 1px solid rgba(250,204,21,0.18);
+    border-left: 4px solid #facc15;
+}
+.alert-critical {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.22);
+    border-left: 4px solid #ef4444;
+}
+.alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.alert-type-warning  { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; color: #facc15; }
+.alert-type-critical { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; color: #ef4444; }
+.alert-msg { font-size: 0.8rem; color: #f2f2f2; margin-top: 1px; }
+
+/* ── Log entries ──────────────────────────────────────────── */
+.log-entry {
+    font-size: 0.72rem;
+    font-family: 'Courier New', monospace;
+    color: #999;
+    padding: 0.35rem 0.6rem;
+    border-left: 2px solid rgba(0,191,255,0.25);
+    margin-bottom: 0.3rem;
+    border-radius: 0 3px 3px 0;
+    transition: color 0.2s, background 0.2s;
+}
+.log-entry:hover {
+    color: #00bfff;
+    background: rgba(0,191,255,0.05);
+}
+
+/* ── Stat mini-cards (used in bottom panels) ──────────────── */
+.stat-block {
+    padding: 0.6rem 0.75rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 0.35rem;
+}
+.stat-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #999;
+}
+.stat-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-top: 1px;
+}
+
+/* ── Section separator ────────────────────────────────────── */
+.section-sep {
+    border: none;
+    border-top: 1px solid #282e40;
+    margin: 0.9rem 0;
+}
+
+/* ── Streamlit widget overrides ──────────────────────────── */
+[data-testid="metric-container"] {
+    background: #1e2130;
+    border: 1px solid #282e40;
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+}
+
+/* Plotly chart background transparency */
+.js-plotly-plot .plotly .main-svg {
+    background: transparent !important;
+}
+
+/* Scrollable log box */
+.log-scroll {
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+.log-scroll::-webkit-scrollbar { width: 5px; }
+.log-scroll::-webkit-scrollbar-track { background: #1a1a1a; }
+.log-scroll::-webkit-scrollbar-thumb { background: #282e40; border-radius: 4px; }

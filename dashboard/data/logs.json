@@ -1,0 +1,50 @@
+[
+  {
+    "id": "LOG-001",
+    "timestamp": "14:32:05",
+    "message": "Rover initialized – Systems nominal",
+    "level": "INFO"
+  },
+  {
+    "id": "LOG-002",
+    "timestamp": "14:33:12",
+    "message": "Navigation system online",
+    "level": "INFO"
+  },
+  {
+    "id": "LOG-003",
+    "timestamp": "14:35:40",
+    "message": "Starting terrain analysis – sector 7G",
+    "level": "INFO"
+  },
+  {
+    "id": "LOG-004",
+    "timestamp": "14:38:15",
+    "message": "Obstacle detected at coordinates 130, 235",
+    "level": "WARN"
+  },
+  {
+    "id": "LOG-005",
+    "timestamp": "14:40:22",
+    "message": "Calculating alternate route via waypoint C",
+    "level": "INFO"
+  },
+  {
+    "id": "LOG-006",
+    "timestamp": "14:41:05",
+    "message": "Route recalculated – ETA 18 minutes",
+    "level": "INFO"
+  },
+  {
+    "id": "LOG-007",
+    "timestamp": "14:42:30",
+    "message": "Terrain sample collected at (128.4, 241.7)",
+    "level": "INFO"
+  },
+  {
+    "id": "LOG-008",
+    "timestamp": "14:43:55",
+    "message": "Solar panel alignment optimized",
+    "level": "INFO"
+  }
+]
