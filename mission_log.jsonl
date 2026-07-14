@@ -1,2 +1,0 @@
-{"timestamp": "2026-06-24T16:39:40Z", "system_status": {"state": "MOVING", "speed_kmh": 1.9}, "navigation": {"current_position": [7, 3], "destination": [7, 4]}, "sensors": {"battery_level_percent": 99.71, "temperature_celsius": -62.1, "obstacle_detected": false}}
-{"timestamp": "2026-06-24T16:39:41Z", "system_status": {"state": "ARRIVED", "speed_kmh": 0.0}, "navigation": {"current_position": [7, 4], "destination": [7, 4]}, "sensors": {"battery_level_percent": 99.71, "temperature_celsius": -61.7, "obstacle_detected": false}}

@@ -3,6 +3,10 @@ import sys
 import os
 import time
 
+# ── Backend configuration ──────────────────────────────────────────
+# Change this if backend runs on a different port
+BACKEND_URL = "http://127.0.0.1:8000"
+
 # Ensure all modules are findable from project root
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,6 +34,7 @@ def run_simulation(ticks=50, delay=1.0):
         output_file="telemetry_output.json",
         log_file="mission_log.jsonl"
     )
+    telemetry.backend_url = BACKEND_URL  # inject configurable URL
 
     print(f"Rover initialised at {start} → destination {goal}\n")
 
