@@ -1,2 +1,2 @@
 Mission Outcome : ARRIVED
-Total Ticks     : 2
+Total Ticks     : 12
