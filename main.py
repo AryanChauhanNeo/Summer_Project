@@ -10,7 +10,7 @@ import time
 
 # ── Backend configuration ──────────────────────────────────────────
 # Change this if backend runs on a different port
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "https://mars-rover-backend.onrender.com"
 
 # Ensure all modules are findable from project root
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -38,9 +38,9 @@ def post_terrain_to_backend(terrain, start, goal, backend_url=BACKEND_URL):
         response = requests.post(
             f"{backend_url}/terrain",
             json=terrain_payload,
-            timeout=3
+            timeout=30
         )
-        if response.status_code == 200:
+        if response.status_code in (200, 201):
             print("[Backend] ✅ Terrain posted successfully.")
         else:
             print(f"[Backend] ⚠️ POST /terrain returned {response.status_code}")
