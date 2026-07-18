@@ -20,6 +20,31 @@ def get_telemetry() -> Dict[str, Any]:
 
     data = fetch_telemetry()
 
+    # ------------------------------------------------------------
+    # Backend has no telemetry yet
+    # ------------------------------------------------------------
+    if (
+        not isinstance(data, dict)
+        or "navigation" not in data
+        or "sensors" not in data
+        or "system_status" not in data
+    ):
+        return {
+            "timestamp": "No Data",
+            "x": 0,
+            "y": 0,
+            "destination_x": 0,
+            "destination_y": 0,
+            "battery": 0,
+            "temperature": 0,
+            "speed": 0,
+            "is_moving": False,
+            "obstacle_detected": False,
+            "distance_to_target": 0,
+            "state": "WAITING FOR MEMBER 1",
+            "raw": data,
+        }
+
     navigation = data["navigation"]
     sensors = data["sensors"]
     system = data["system_status"]
@@ -36,43 +61,41 @@ def get_telemetry() -> Dict[str, Any]:
     )
 
     return {
-    "timestamp": data["timestamp"],
-
-    "x": x,
-    "y": y,
-
-    "destination_x": destination_x,
-    "destination_y": destination_y,
-
-    "battery": sensors["battery_level_percent"],
-
-    "temperature": sensors["temperature_celsius"],
-
-    "speed": system["speed_kmh"],
-
-    "is_moving": system["state"].upper() == "MOVING",
-
-    "obstacle_detected": sensors["obstacle_detected"],
-
-    "distance_to_target": round(distance, 2),
-
-    "state": system["state"],
-
-    "raw": data,
+        "timestamp": data["timestamp"],
+        "x": x,
+        "y": y,
+        "destination_x": destination_x,
+        "destination_y": destination_y,
+        "battery": sensors["battery_level_percent"],
+        "temperature": sensors["temperature_celsius"],
+        "speed": system["speed_kmh"],
+        "is_moving": system["state"].upper() == "MOVING",
+        "obstacle_detected": sensors["obstacle_detected"],
+        "distance_to_target": round(distance, 2),
+        "state": system["state"],
+        "raw": data,
     }
 
 
 def battery_color(pct: float) -> str:
-    if pct > 60:
-        return "#4ade80"
-    if pct > 30:
+    """Return battery color."""
+
+    if pct >= 75:
+        return "#22c55e"
+
+    if pct >= 40:
         return "#facc15"
+
     return "#ef4444"
 
 
 def temp_color(temp: float) -> str:
+    """Return temperature color."""
+
     if temp < 45:
         return "#60a5fa"
-    if temp < 55:
+
+    if temp < 60:
         return "#facc15"
+
     return "#ef4444"
