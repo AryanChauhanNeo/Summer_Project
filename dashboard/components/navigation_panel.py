@@ -252,7 +252,7 @@ def render_navigation_panel(telemetry: dict) -> None:
     # ── Stats row ──────────────────────────────────────────────────────────
     c1, c2, c3 = st.columns(3)
     dist = nav["distance_to_target"]
-    hdg  = telemetry.get("heading", 245)
+    hdg = nav.get("heading", "--")
     spd  = telemetry.get("speed", 0.0)
 
     with c1:

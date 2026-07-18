@@ -82,7 +82,7 @@ def render() -> None:
     _init_session()
     _simulate_tick()
 
-    telemetry = get_telemetry(seed=st.session_state.tick_seed)
+    telemetry = get_telemetry()
 
     render_header(mission_active=True)
 
