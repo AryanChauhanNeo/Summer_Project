@@ -1,5 +1,16 @@
+# Python cache
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+
+# Environment variables
 .env
+
+# Generated JSON (if you don't want to track them)
 *.json
+
+# VS Code
+.vscode/

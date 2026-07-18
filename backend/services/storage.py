@@ -27,6 +27,7 @@ from typing import Optional
 
 from models.navigation import NavigationData
 from models.telemetry import TelemetryData
+from models.terrain import TerrainData
 
 
 class InMemoryStorage:
@@ -40,6 +41,7 @@ class InMemoryStorage:
     """
 
     def __init__(self) -> None:
+        self._terrain: Optional[TerrainData] = None
         self._telemetry: Optional[TelemetryData] = None
         self._navigation: Optional[NavigationData] = None
         self._lock = threading.Lock()
@@ -61,6 +63,15 @@ class InMemoryStorage:
     def get_latest_navigation(self) -> Optional[NavigationData]:
         with self._lock:
             return self._navigation
+        
+    # ── Terrain ───────────────────────────────────────────────────
+    def save_terrain(self, data: TerrainData) -> None:
+        with self._lock:
+            self._terrain = data
+
+    def get_latest_terrain(self) -> Optional[TerrainData]:
+        with self._lock:
+            return self._terrain
 
 
 # Single shared instance used across the whole app (simple, explicit

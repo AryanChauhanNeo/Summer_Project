@@ -21,7 +21,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.config import settings
-from routes import navigation, telemetry
+from routes import navigation, telemetry, terrain
 from utils.logging_config import configure_logging
 
 configure_logging()
@@ -61,6 +61,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 app.include_router(telemetry.router)
 app.include_router(navigation.router)
+app.include_router(terrain.router)
 
 
 # ---------------------------------------------------------------------------
