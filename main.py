@@ -1,7 +1,16 @@
 # main.py
+
+import requests
+import json
+import numpy as np
+
 import sys
 import os
 import time
+
+# ── Backend configuration ──────────────────────────────────────────
+# Change this if backend runs on a different port
+BACKEND_URL = "http://127.0.0.1:8000"
 
 # Ensure all modules are findable from project root
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -10,6 +19,38 @@ from terrain.terrain_generator  import MarsTerrainGenerator
 from rover.rover                import Rover
 from sensors.sensor_simulator   import SensorSimulator
 from telemetry.telemetry_manager import TelemetryManager
+
+
+def post_terrain_to_backend(terrain, start, goal, backend_url=BACKEND_URL):
+    """
+    Sends terrain grid to backend ONCE at simulation start.
+    TM2 calls GET /terrain once to cache it locally.
+    Never called again during simulation.
+    """
+    try:
+        terrain_payload = {
+            "grid":  terrain.grid.tolist(),
+            "rows":  terrain.rows,
+            "cols":  terrain.cols,
+            "start": list(start),
+            "goal":  list(goal)
+        }
+        response = requests.post(
+            f"{backend_url}/terrain",
+            json=terrain_payload,
+            timeout=3
+        )
+        if response.status_code == 200:
+            print("[Backend] ✅ Terrain posted successfully.")
+        else:
+            print(f"[Backend] ⚠️ POST /terrain returned {response.status_code}")
+
+    except requests.exceptions.ConnectionError:
+        print("[Backend] ⚠️ Could not post terrain — backend not running.")
+    except requests.exceptions.Timeout:
+        print("[Backend] ⚠️ POST /terrain timed out.")
+    except Exception as e:
+        print(f"[Backend] ⚠️ Unexpected error posting terrain — {e}")
 
 
 def run_simulation(ticks=50, delay=1.0):
@@ -30,6 +71,8 @@ def run_simulation(ticks=50, delay=1.0):
         output_file="telemetry_output.json",
         log_file="mission_log.jsonl"
     )
+    telemetry.backend_url = BACKEND_URL  # inject configurable URL
+    post_terrain_to_backend(terrain, start, goal)
 
     print(f"Rover initialised at {start} → destination {goal}\n")
 
